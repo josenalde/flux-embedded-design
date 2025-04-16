@@ -2,11 +2,12 @@
 #include <pthread.h>
 #include <cstdlib>
 #include <ctime>
-//#include <boost/timer/timer.hpp>
 
-using namespace std;
+using namespace std; //PARALELO COM 8 THREADS, SEM MUTEX
 
+//#define N 32
 #define N 1000000
+
 /*Processador Intel® Core™ i7-10510U quad-core com 2 threads por core: 
   Núcleo é um termo de hardware que descreve o número de unidades de processamento central independentes em um único componente de 
   computação (matriz ou chip).
@@ -18,10 +19,10 @@ using namespace std;
 int v[N], count;
 
 void* count3s_thread(void* id) {
-    int my_id = (int) id;
-    //cout << "criei thread " << my_id;
+    long my_id = (long) id;
+    cout << "thread " << my_id;
     pthread_t thId = pthread_self();
-    //printf(" with ID: %d\n", thId);
+    printf(" with ID: %ld\n", thId);
     int length_per_thread = N/T;
     int start = my_id*length_per_thread;
     for (int i=start; i<start+length_per_thread;i++) {
@@ -31,17 +32,19 @@ void* count3s_thread(void* id) {
 }
 
 int main()  {
-    //boost::timer::auto_cpu_timer t;
     pthread_t tid[T]; //array de threads
     int err;
+    //semente para o gerador de números aleatórios (timestamp unix)
     srand(time(NULL));
+    
     for (int i=0; i<N; i++) {
         v[i] = rand() % 4;
         //cout << v[i] << ",";
     }
+    cout << "\n";
     clock_t tstart, tend;
     tstart = clock();
-    for (int i=0; i<T; i++) {
+    for (long i=0; i<T; i++) {
         err = pthread_create(&tid[i], NULL, count3s_thread, (void*) i);
     }
     for (int i=0; i<T; i++) {

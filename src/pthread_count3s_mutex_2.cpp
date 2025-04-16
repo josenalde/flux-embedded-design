@@ -20,10 +20,10 @@ int v[N], count = 0;
 pthread_mutex_t lock;
 
 void* count3s_thread(void* id) {
-    int my_id =  *(int*)id;
-    //cout << "criei thread " << my_id;
+    long my_id =  (long)id;
+    cout << "criei thread " << my_id;
     pthread_t thId = pthread_self();
-    //printf(" with ID: %d\n", thId);
+    printf(" with ID: %ld\n", thId);
     int length_per_thread = N/T;
     int start = my_id*length_per_thread;
     
@@ -50,8 +50,8 @@ int main()  {
     
     clock_t tstart, tend;
     tstart = clock();
-    for (int i=0; i<T; i++) {
-        err = pthread_create(&tid[i], NULL, count3s_thread, &i);
+    for (long i=0; i<T; i++) {
+        err = pthread_create(&tid[i], NULL, count3s_thread, (void*)i);
     }
     for (int i=0; i<T; i++) {
         err  = pthread_join(tid[i], NULL);
