@@ -1,3 +1,4 @@
+//CONTAGEM DE 3S COM CONTROLE DE REGIÃO CRÍTICA DENTRO DO LAÇO DE COMPARAÇÃO - TENDE A SER MAIS LENTO
 #include <iostream>
 #include <pthread.h>
 #include <cstdlib>
