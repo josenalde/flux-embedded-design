@@ -1,3 +1,5 @@
+//CONTAGEM DE 3s TOTALMENTE SERIAL
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
