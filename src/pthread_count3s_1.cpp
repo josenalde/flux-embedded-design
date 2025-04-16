@@ -1,3 +1,4 @@
+//CONTAGEM DE 3s COM THREADS, PORÉM SEM CONTROLE DE REGIÃO CRÍTICA, CONTAGEM NÃO É SEGURA, POIS count GLOBAL É COMPARTILHADA PELAS T THREADS
 #include <iostream>
 #include <pthread.h>
 #include <cstdlib>
