@@ -1,81 +1,63 @@
-#include <cstdio>
 #include <pthread.h>
-#include <cstdlib>
+#include <iostream>
 
 //limite de threads em Linux definda em /proc/sys/kernel/threads-max
- 
-/*Rotina que será executada pelos dois threads*/
+/*Rotina que será executada pelas duas threads*/
 void * routine(void *arg);
  
-int main (int argc, char *argv[])
-{
-    pthread_t thread_idA;
-    pthread_t thread_idB;
+int main (int argc, char *argv[]) {
+    pthread_t thread_A;
+    pthread_t thread_B;
+
     void * thread_res;
     int rstatus;
     
     /*tenta iniciar o thread, indicando a função 'routine' e passando como argumento a string "Thread A"*/
-    rstatus = pthread_create (&thread_idA, NULL, routine, (void*)("Thread A"));
+    rstatus = pthread_create (&thread_A, NULL, routine, (void*)("Thread A"));
  
     /*verificar se ocorreu algum erro na chamada de pthread_create*/
-    if(rstatus != 0)
-    {
-        printf ("Erro ao criar o thread A.\n");
+    if(rstatus != 0) {
+        std::cout << "Erro ao criar a thread A.\n";
         exit(EXIT_FAILURE);
     }
  
-    printf ("Thread A criado com sucesso!\n");
+    std::cout << "Thread A criada com sucesso!\n";
  
     /*tenta iniciar o thread, indicando novamente a função 'routine' e passando como argumento a string "Thread B"*/
-    rstatus = pthread_create (&thread_idB, NULL, routine, (void*)("Thread B"));
+    rstatus = pthread_create (&thread_B, NULL, routine, (void*)("Thread B"));
  
     /*verificar se ocorreu algum erro na chamada de pthread_create*/
-    if(rstatus != 0)
-    {
-        printf ("Erro ao criar o thread B.\n");
+    if(rstatus != 0) {
+        std::cout << "Erro ao criar a thread B.\n";
         exit(EXIT_FAILURE);
     }
  
-    printf ("Thread B criado com sucesso!\n");
- 
- 
-    /*aguarda finalização do thread A identificado por thread_idA. O retorno é passado pelo ponteiro thread_res*/
-    rstatus = pthread_join (thread_idA, &thread_res);
- 
-    if(rstatus != 0)
-    {
-        printf ("Erro ao aguardar finalização do thread A.\n");
+    std::cout << "Thread B criada com sucesso!\n";
+  
+    /*aguarda finalização do thread A identificado por thread_A. O retorno é passado pelo ponteiro thread_res*/
+    rstatus = pthread_join (thread_A, &thread_res);
+    if(rstatus != 0) {
+        std::cout << "Erro ao aguardar finalização do thread A.\n";
         exit(EXIT_FAILURE);
     }
- 
-    printf ("Thread A finalizado! Retorno = %s\n", (char *)thread_res);
- 
- 
+    std::cout << "Thread A finalizada! Retorno = " << (char *)thread_res;
+  
     /*aguarda finalização do thread B identificado por thread_idB. O retorno é passado pelo ponteiro thread_res*/
-    rstatus = pthread_join (thread_idB, &thread_res);
- 
-    if(rstatus != 0)
-    {
-        printf ("Erro ao aguardar finalização do thread B.\n");
+    rstatus = pthread_join (thread_B, &thread_res);
+    if(rstatus != 0) {
+        std::cout << "Erro ao aguardar finalização do thread B.\n";
         exit(EXIT_FAILURE);
     }
- 
-    printf ("Thread B finalizado! Retorno = %s\n", (char *)thread_res);
- 
+    std::cout << "Thread B finalizada! Retorno = " << (char *)thread_res;
     return 0;
 }
  
-void * routine(void *arg)
-{
+void * routine(void *arg) {
     int contador = 10;
- 
-    /*procedimento para decrementar um contador e exibir o seu valor*/
-    while(contador--)
-    {
-        printf("%s: %i\n", (char *)arg, contador);
+    while(contador--) {
+        std::cout << (char *)arg <<  contador << std::endl;
         //sched_yield();
     }
- 
     /*finaliza a função retornando o argumento que foi recebido*/
     pthread_exit(arg);
     return NULL;
