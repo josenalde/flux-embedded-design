@@ -11,12 +11,11 @@ void * routine(void *arg);
  
 int main (int argc, char *argv[]) {
     pthread_t thread_id;
-    void * thread_res; //para guardar o resultado passado por routine 
-                       //no exit, usado no JOIN
+    void * thread_res; //para guardar o resultado passado por routine no exit, usado no JOIN
     int rstatus; // guardar status do create e do join
     
-    /*tenta iniciar o thread, indicando a função 'routine' e passando como argumento a string "Embarcados é no TADS"*/
-    rstatus = pthread_create (&thread_id, NULL, routine, (void*)("Embarcados é no TADS"));
+    /*tenta iniciar o thread, indicando a função 'routine' e passando como argumento a string "Embarcados é no PPGMECA-UFRN"*/
+    rstatus = pthread_create (&thread_id, NULL, routine, (void*)("Embarcados é no PPGMECA-UFRN"));
  
     /*verificar se ocorreu algum erro na chamada de pthread_create*/
     if(rstatus != 0) {
@@ -41,10 +40,10 @@ int main (int argc, char *argv[]) {
     return 0;
 }
  
-void * routine(void *arg) {
+void *routine(void *arg) {
     /*exibe o argumento recebido*/
-    std::cout << "Argumento: " << (char *)arg << std::endl;
+    std::cout << "Argumento recebido ao criar thread: " << (char *)arg << std::endl;
     /*finaliza a função retornando o argumento que foi recebido que será lido por thread_res*/
-    pthread_exit(arg);
-    return NULL;
+    pthread_exit(arg); //forma de devolver o argumento recebido para fora da rotina da thread - útil para callback/test
+    return NULL; //evitar warning, pois deve devolver um endereço
 }
