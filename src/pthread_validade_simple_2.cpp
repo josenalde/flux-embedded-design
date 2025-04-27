@@ -55,8 +55,8 @@ int main (int argc, char *argv[]) {
 void * routine(void *arg) {
     int contador = 10;
     while(contador--) {
-        std::cout << (char *)arg <<  contador << std::endl;
-        //sched_yield();
+        std::cout << (char *)arg <<  ":" << contador << std::endl;
+        //sched_yield(); //bloqueia atual, que vai para ready. A outra que está na fila e estava ready entra em execução
     }
     /*finaliza a função retornando o argumento que foi recebido*/
     pthread_exit(arg);
