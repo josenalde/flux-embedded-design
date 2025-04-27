@@ -1,5 +1,6 @@
 #include <pthread.h>
 #include <iostream>
+#include <unistd.h>
 
 //limite de threads em Linux definda em /proc/sys/kernel/threads-max
 /*Rotina que será executada pelas duas threads*/
@@ -56,6 +57,7 @@ void * routine(void *arg) {
     int contador = 10;
     while(contador--) {
         std::cout << (char *)arg <<  ":" << contador << std::endl;
+        usleep(100); // no windows Sleep
         //sched_yield(); //bloqueia atual, que vai para ready. A outra que está na fila e estava ready entra em execução
     }
     /*finaliza a função retornando o argumento que foi recebido*/
