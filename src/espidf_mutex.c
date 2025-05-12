@@ -36,7 +36,7 @@ void read_sensor(void *params) {
 void lcd_display(void *params) {
     while(true) {
         if(xSemaphoreTake(mutex_i2c, 1000 / portTICK_PERIOD_MS)) {
-            temperature = access_i2c(1);
+            temperature = access_i2c(2);
             ESP_LOGI("i2c", "writing to LCD");
             xSemaphoreGive(mutex_i2c);
         } else {
