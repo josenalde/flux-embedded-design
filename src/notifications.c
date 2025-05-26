@@ -8,7 +8,7 @@
 static TaskHandle_t receiverHandle = NULL;
 
 
-void emitter(void *params) {
+void receiver(void *params) {
     while(true) {
         int qtd = ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
         printf("Notifications received: %d\n", qtd);
@@ -16,7 +16,7 @@ void emitter(void *params) {
     }
 }
 
-void receiver(void *params) {
+void emmiter(void *params) {
     while(true) {
         xTaskNotifyGive(receiverHandle);
         vTaskDelay(pdMS_TO_TICKS(2000));
