@@ -10,6 +10,9 @@ EventGroupHandle_t eventGroupConn;
 const int WiFiflag = BIT0;
 const int MQTTflag = BIT1;
 
+//#define BIT_0	( 1 << 0 ) 1 * 2^0 = 1
+//#define BIT_4	( 1 << 4 ) 1 * 2^4 = 10000
+
 SemaphoreHandle_t triggerConn_semphr;
 float average_temperature;
 
